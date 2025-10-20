@@ -139,7 +139,7 @@ const Login: React.FC<LoginProps> = ({ onToggleMode, onForgotPassword }) => {
                     <button
                         type="submit"
                         disabled={isLoading}
-                        className="w-full bg-green-700 hover:bg-green-800 text-white py-2 rounded-lg shadow-md hover:shadow-lg transition"
+                        className="w-full bg-gradient-to-r from-green-500 to-green-700 hover:from-green-600 hover:to-green-800 text-white py-2 rounded-lg shadow-md hover:shadow-lg transition-all duration-300"
                     >
                         {isLoading ? "Signing in..." : "Sign In"}
                     </button>
