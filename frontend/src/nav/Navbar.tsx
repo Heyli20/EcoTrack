@@ -1,17 +1,24 @@
-import React, { useState } from "react";
+import React from "react";
 import logo from '../assets/logo.png';
+import { Link, useLocation } from "react-router-dom";
 
 const Navbar: React.FC = () => {
-    const [active, setActive] = useState("Dashboard");
+    const location = useLocation(); // Get current path
 
-    const menuItems = ["Dashboard", "Waste History", "Collections", "Payments", "Settings"];
+    const menuItems = [
+        { label: "Dashboard", path: "/dashboard" },
+        { label: "Waste History", path: "/waste-history" },
+        { label: "Collections", path: "/collections" },
+        { label: "Payments", path: "/payments" },
+        { label: "Settings", path: "/settings" }
+    ];
 
     return (
         <nav className="bg-white/40 backdrop-blur-lg text-black px-6 py-3 flex justify-between items-center shadow">
             {/* Left Section */}
             <div className="flex items-center space-x-10">
                 {/* Logo */}
-                <div className="flex items-center font-bold text-lg space-x-2">
+                <div className="flex items-center font-bold text-lg space-x-4 ml-4">
                     <img
                         src={logo}
                         alt="logo"
@@ -20,42 +27,38 @@ const Navbar: React.FC = () => {
                 </div>
 
                 {/* Menu Links */}
-                <ul className="flex space-x-6 text-sm">
-                    {menuItems.map((item) => (
-                        <li
-                            key={item}
-                            onClick={() => setActive(item)}
-                            className={`
-                                px-3 py-1 cursor-pointer relative
-                                transition-all duration-300
-                            `}
-                        >
-                            {item}
-
-                            {/* Underline */}
-                            <span
-                                className={`
-                                    absolute left-0 bottom-0 h-0.5 w-full bg-gradient-to-r from-green-500 to-green-700 
-                                    transition-all duration-300
-                                    ${active === item ? "scale-x-100" : "scale-x-0"}
-                                    origin-left
-                                `}
-                            />
-                        </li>
-                    ))}
+                <ul className="flex space-x-10 text-sm">
+                    {menuItems.map(({ label, path }) => {
+                        const isActive = location.pathname === path; // check current path
+                        return (
+                            <li
+                                key={label}
+                                className="px-3 py-1 cursor-pointer relative transition-all duration-300"
+                            >
+                                <Link to={path} className="relative">
+                                    {label}
+                                    <span
+                                        className={`
+                                            absolute left-0 bottom-0 h-0.5 w-full bg-gradient-to-r 
+                                            from-green-500 to-green-700 transition-all duration-300
+                                            ${isActive ? "scale-x-100" : "scale-x-0"} origin-left translate-y-1
+                                        `}
+                                    />
+                                </Link>
+                            </li>
+                        );
+                    })}
                 </ul>
             </div>
 
             {/* Right Section */}
             <div className="flex items-center space-x-4">
-                {/* Notification Bell */}
                 <div className="relative cursor-pointer">
                     <span className="text-xl">🔔</span>
                     <span className="absolute -top-1 -right-1 bg-red-600 text-xs px-1 rounded-full">
                         2
                     </span>
                 </div>
-                {/* Profile Image */}
                 <img
                     src="https://randomuser.me/api/portraits/men/32.jpg"
                     alt="profile"
