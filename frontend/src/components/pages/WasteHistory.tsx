@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Navbar from "../../nav/Navbar.tsx";
+import Footer from "../../footer/Footer.tsx";
 import { Leaf, GlassWater, Recycle, Package, Star } from "lucide-react";
 
 const WasteHistoryPage: React.FC = () => {
@@ -29,96 +30,101 @@ const WasteHistoryPage: React.FC = () => {
     ];
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen flex flex-col bg-gray-50">
             <Navbar />
 
-            <div className="p-6 space-y-6 max-w-7xl mx-auto">
-                <h1 className="text-3xl font-semibold text-gray-800">
-                    Waste Collection History
-                </h1>
+            <main className="flex-grow">
+                <div className="p-6 space-y-6 w-full max-w-[1400px] mx-auto">
+                    <h1 className="text-3xl font-semibold text-gray-800">
+                        Waste Collection History
+                    </h1>
 
-                {/* Filter Buttons */}
-                <div className="shadow-md rounded-2xl bg-white p-5">
-                    <div className="flex flex-wrap gap-3">
-                        {types.map((t) => (
-                            <button
-                                key={t.key}
-                                onClick={() => setGarbageType(t.key)}
-                                className={`flex items-center gap-2 px-5 py-2.5 rounded-full font-medium border transition-all duration-300
-                                    ${
-                                    garbageType === t.key
-                                        ? "bg-gradient-to-r from-green-500 to-green-700 text-white shadow-md scale-105 border-green-400"
-                                        : "bg-white border-gray-300 text-gray-700 hover:bg-green-100"
-                                }
-                                `}
-                            >
-                                {t.icon}
-                                {t.label}
-                            </button>
-                        ))}
+                    {/* Filter Buttons */}
+                    <div className="shadow-md rounded-2xl bg-white p-5">
+                        <div className="flex flex-wrap gap-3">
+                            {types.map((t) => (
+                                <button
+                                    key={t.key}
+                                    onClick={() => setGarbageType(t.key)}
+                                    className={`flex items-center gap-2 px-5 py-2.5 rounded-full font-medium border transition-all duration-300
+                                        ${
+                                        garbageType === t.key
+                                            ? "bg-gradient-to-r from-green-500 to-green-700 text-white shadow-md scale-105 border-green-400"
+                                            : "bg-white border-gray-300 text-gray-700 hover:bg-green-100"
+                                    }
+                                    `}
+                                >
+                                    {t.icon}
+                                    {t.label}
+                                </button>
+                            ))}
+                        </div>
                     </div>
+
+                    {/* EMPTY STATE */}
+                    {tableData.length === 0 && (
+                        <div className="text-center py-20 bg-white rounded-xl shadow">
+                            <div className="text-5xl mb-4">📄</div>
+                            <h2 className="text-xl font-semibold text-gray-700">
+                                No Waste Collection Records
+                            </h2>
+                            <p className="text-gray-500 mb-5">
+                                You will see completed collection records here once collections are done.
+                            </p>
+                        </div>
+                    )}
+
+                    {/* Table */}
+                    {tableData.length > 0 &&(
+                        <div className="overflow-x-auto">
+                            <table className="min-w-full bg-white rounded-xl shadow-md overflow-hidden">
+                                <thead>
+                                <tr className="bg-green-50 text-gray-700 uppercase text-sm font-semibold">
+                                    <th className="py-3 px-6 text-left">Bin Number</th>
+                                    <th className="py-3 px-6 text-left">Waste Type</th>
+                                    <th className="py-3 px-6 text-left">Collected Date</th>
+                                    <th className="py-3 px-6 text-left">Time</th>
+                                    <th className="py-3 px-6 text-left">Collector Name</th>
+                                    <th className="py-3 px-6 text-left">Weight</th> {/* NEW COLUMN */}
+                                </tr>
+                                </thead>
+
+                                <tbody>
+                                {tableData
+                                    .filter(row => garbageType === "all" || row.type.toLowerCase().includes(garbageType))
+                                    .map((row, index) => (
+                                        <tr
+                                            key={index}
+                                            className="border-b last:border-b-0 hover:bg-green-50 transition-all duration-200 cursor-pointer"
+                                        >
+                                            <td className="py-3 px-6">{row.bin}</td>
+
+                                            {/* Waste Type with Icon Badge */}
+                                            <td className="py-3 px-6">
+                                                <span
+                                                    className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-medium ${wasteColors[row.type]}`}
+                                                >
+                                                    ● {row.type}
+                                                </span>
+                                            </td>
+
+                                            <td className="py-3 px-6">{row.date}</td>
+                                            <td className="py-3 px-6">{row.time}</td>
+                                            <td className="py-3 px-6">{row.collector}</td>
+
+                                            {/* NEW WEIGHT COLUMN */}
+                                            <td className="py-3 px-6 font-medium text-gray-800">{row.weight}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    )}
                 </div>
+            </main>
 
-                {/* EMPTY STATE */}
-                {tableData.length === 0 && (
-                    <div className="text-center py-20 bg-white rounded-xl shadow">
-                        <div className="text-5xl mb-4">📄</div>
-                        <h2 className="text-xl font-semibold text-gray-700">
-                            No Waste Collection Records
-                        </h2>
-                        <p className="text-gray-500 mb-5">
-                            You will see completed collection records here once collections are done.
-                        </p>
-                    </div>
-                )}
+            <Footer />
 
-                {/* Table */}
-                {tableData.length > 0 &&(
-                    <div className="overflow-x-auto">
-                        <table className="min-w-full bg-white rounded-xl shadow-md overflow-hidden">
-                            <thead>
-                            <tr className="bg-green-50 text-gray-700 uppercase text-sm font-semibold">
-                                <th className="py-3 px-6 text-left">Bin Number</th>
-                                <th className="py-3 px-6 text-left">Waste Type</th>
-                                <th className="py-3 px-6 text-left">Collected Date</th>
-                                <th className="py-3 px-6 text-left">Time</th>
-                                <th className="py-3 px-6 text-left">Collector Name</th>
-                                <th className="py-3 px-6 text-left">Weight</th> {/* NEW COLUMN */}
-                            </tr>
-                            </thead>
-
-                            <tbody>
-                            {tableData
-                                .filter(row => garbageType === "all" || row.type.toLowerCase().includes(garbageType))
-                                .map((row, index) => (
-                                    <tr
-                                        key={index}
-                                        className="border-b last:border-b-0 hover:bg-green-50 transition-all duration-200 cursor-pointer"
-                                    >
-                                        <td className="py-3 px-6">{row.bin}</td>
-
-                                        {/* Waste Type with Icon Badge */}
-                                        <td className="py-3 px-6">
-                                            <span
-                                                className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-medium ${wasteColors[row.type]}`}
-                                            >
-                                                ● {row.type}
-                                            </span>
-                                        </td>
-
-                                        <td className="py-3 px-6">{row.date}</td>
-                                        <td className="py-3 px-6">{row.time}</td>
-                                        <td className="py-3 px-6">{row.collector}</td>
-
-                                        {/* NEW WEIGHT COLUMN */}
-                                        <td className="py-3 px-6 font-medium text-gray-800">{row.weight}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-                )}
-            </div>
         </div>
     );
 };
