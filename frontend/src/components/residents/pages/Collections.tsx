@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import Navbar from "../../nav/Navbar";
-import Footer from "../../footer/Footer.tsx";
+import Navbar from "../nav/Navbar.tsx";
+import Footer from "../footer/Footer.tsx";
 import { MapPin, Clock, Plus, Pencil, Trash2, Search } from "lucide-react";
 
 const CollectionsPage: React.FC = () => {

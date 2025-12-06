@@ -2,13 +2,14 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AuthContainer from "./components/auth/AuthContainer.tsx";
-import Dashboard from "./components/pages/Dashboard.tsx";
-import WasteHistory from "./components/pages/WasteHistory.tsx";
-import Collections from "./components/pages/Collections.tsx";
-import Payment from "./components/pages/Payment.tsx";
-import Settings from "./components/pages/Settings.tsx";
-import Profile from "./components/pages/Profile.tsx";
-import NotificationDetailPage from "./components/pages/Notification.tsx";
+import Dashboard from "./components/residents/pages/Dashboard.tsx";
+import WasteHistory from "./components/residents/pages/WasteHistory.tsx";
+import Collections from "./components/residents/pages/Collections.tsx";
+import Payment from "./components/residents/pages/Payment.tsx";
+import Settings from "./components/Settings.tsx";
+import Profile from "./components/Profile.tsx";
+import NotificationDetailPage from "./components/Notification.tsx";
+import AdminDash from "./components/admin/pages/AdminDash.tsx";
 
 function App() {
     return (
@@ -24,6 +25,9 @@ function App() {
                 <Route path="/settings" element={<Settings/>} />
                 <Route path="/profile" element={<Profile/>} />
                 <Route path="/notification/:id" element={<NotificationDetailPage/>} />
+
+                {/* Admin */}
+                <Route path="/adminDash" element={<AdminDash/>} />
             </Routes>
         </Router>
     )
