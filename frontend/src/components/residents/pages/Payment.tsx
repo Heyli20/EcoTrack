@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import Navbar from "../../nav/Navbar";
-import Footer from "../../footer/Footer.tsx";
+import Navbar from "../nav/Navbar.tsx";
+import Footer from "../footer/Footer.tsx";
 import { CreditCard, CheckCircle, Clock, XCircle } from "lucide-react";
 
 const PaymentPage: React.FC = () => {

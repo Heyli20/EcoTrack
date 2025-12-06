@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import { useAuth } from "../../hooks/useAuth";
+import { useAuth } from "../residents/hooks/useAuth";
 import { toast } from "react-toastify";
 import { Mail, Lock, User} from "lucide-react";
 import logo from "../../assets/logo.png";

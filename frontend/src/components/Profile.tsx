@@ -1,12 +1,13 @@
 import React from "react";
-import Navbar from "../../nav/Navbar";
-import Footer from "../../footer/Footer.tsx";
+import Navbar from "./residents/nav/Navbar.tsx";
+import Footer from "./residents/footer/Footer.tsx";
 import { Mail, Phone, LogOut } from "lucide-react";
 
 const ProfilePage: React.FC = () => {
     return (
         <div className="min-h-screen flex flex-col bg-gray-50">
             <Navbar />
+            {/*if admin=> <adminNav>*/}
 
             <main className="flex-grow">
                 <div className="p-6 mx-auto space-y-6 w-full max-w-[1400px]">

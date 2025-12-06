@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import WasteCollectionChart from "../WasteCollectionChart.tsx";
-import Navbar from "../../nav/Navbar.tsx";
-import Footer from "../../footer/Footer.tsx";
+import Navbar from "../nav/Navbar.tsx";
+import Footer from "../footer/Footer.tsx";
 import { Calendar, Clock, DollarSign, Trash2, CheckCircle, CreditCard, CalendarDays} from "lucide-react";
 
 const Dashboard: React.FC = () => {

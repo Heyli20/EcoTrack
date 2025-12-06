@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from "react";
-import logo from "../assets/logo.png";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 interface Notification {
@@ -8,7 +7,7 @@ interface Notification {
     path: string;
 }
 
-const Navbar: React.FC = () => {
+const AdminNavbar: React.FC = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const [openMenu, setOpenMenu] = useState(false);
@@ -18,15 +17,18 @@ const Navbar: React.FC = () => {
     const menuRef = useRef<HTMLDivElement>(null);
 
     const menuItems = [
-        { label: "Dashboard", path: "/dashboard" },
-        { label: "Waste History", path: "/waste-history" },
-        { label: "Collections", path: "/collections" },
-        { label: "Payments", path: "/payments" },
+        { label: "Dashboard", path: "/admin/dashboard" },
+        { label: "Users", path: "/admin/users" },
+        { label: "Requests", path: "/admin/requests" },
+        { label: "Trucks", path: "/admin/trucks" },
+        { label: "Analysis", path: "/admin/analysis" },
+        { label: "Payments", path: "/admin/payments" },
+        { label: "Complains", path: "/admin/complains" },
     ];
 
     const notifications: Notification[] = [
-        { id: "N-001", title: "Payment Due: Plastic Waste", path: "/notification/N-001" },
-        { id: "N-002", title: "New Collection Scheduled", path: "/notification/N-002" },
+        { id: "N-001", title: "New user registered", path: "/admin/notification/N-001" },
+        { id: "N-002", title: "New truck assigned", path: "/admin/notification/N-002" },
     ];
 
     useEffect(() => {
@@ -50,55 +52,60 @@ const Navbar: React.FC = () => {
     return (
         <>
             {/* Header */}
-            <nav className="bg-white/40 backdrop-blur-lg text-black px-6 py-3 flex justify-between items-center shadow relative">
+            <nav className="bg-gray-50/70 backdrop-blur-lg px-6 py-3 flex justify-between items-center shadow relative">
                 <div className="flex items-center space-x-6">
                     {/* Logo */}
-                    <img src={logo} alt="logo" className="w-12 h-12" />
+                    <div className="text-xl font-bold text-green-600">Admin Panel</div>
 
                     {/* Desktop menu */}
-                    <ul className="hidden md:flex space-x-10 text-sm">
+                    <ul className="hidden md:flex space-x-8 text-sm font-medium">
                         {menuItems.map(({ label, path }) => {
                             const isActive = location.pathname === path;
                             return (
-                                <li key={label} className="px-3 py-1 cursor-pointer relative">
-                                    <Link to={path} className="relative">
+                                <li key={label} className="relative cursor-pointer">
+                                    <Link
+                                        to={path}
+                                        className={`px-2 py-1 ${
+                                            isActive
+                                                ? "text-green-700 font-semibold"
+                                                : "text-gray-700 hover:text-green-600"
+                                        }`}
+                                    >
                                         {label}
-                                        <span
-                                            className={`absolute left-0 bottom-0 h-0.5 w-full bg-gradient-to-r from-green-500 to-green-700 transition-all origin-left translate-y-1 ${
-                                                isActive ? "scale-x-100" : "scale-x-0"
-                                            }`}
-                                        />
                                     </Link>
+                                    {isActive && (
+                                        <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-green-600 rounded" />
+                                    )}
                                 </li>
                             );
                         })}
                     </ul>
                 </div>
 
-                {/* Right icons */}
+                {/* Right section */}
                 <div className="flex items-center space-x-4 relative" ref={menuRef}>
-                    {/* Notification icon */}
+                    {/* Notifications */}
                     <div className="relative">
                         <button
-                            className="cursor-pointer"
+                            className="cursor-pointer text-xl"
                             onClick={() => {
                                 setShowNotifications(prev => !prev);
                                 setProfileOpen(false);
                             }}
                         >
-                            <span className="text-xl">🔔</span>
+                            🔔
                             <span className="absolute -top-1 -right-1 bg-red-600 text-xs px-1 rounded-full">
                                 {notifications.length}
                             </span>
                         </button>
 
                         {showNotifications && (
-                            <div className="absolute right-0 mt-2 w-64 bg-stone-100 shadow-lg rounded-xl py-2 border border-white/40 z-50">
+                            <div className="absolute right-0 mt-2 w-64 bg-white shadow-lg rounded-xl py-2 border border-gray-200 z-50">
                                 {notifications.map(n => (
                                     <div
                                         key={n.id}
                                         onClick={() => handleNavigate(n.path)}
-                                        className="cursor-pointer w-full text-left px-4 py-2 rounded-lg hover:bg-white/40"
+                                        className="cursor-pointer w-full text-left px-4 py-2 hover:bg-gray-100"
                                     >
                                         {n.title}
                                     </div>
@@ -107,12 +114,12 @@ const Navbar: React.FC = () => {
                         )}
                     </div>
 
-                    {/* Profile icon */}
+                    {/* Profile */}
                     <div className="relative">
                         <img
                             src="https://randomuser.me/api/portraits/men/32.jpg"
                             alt="profile"
-                            className="w-8 h-8 rounded-full border-2 border-white cursor-pointer"
+                            className="w-8 h-8 rounded-full border-2 border-gray-300 cursor-pointer"
                             onClick={e => {
                                 e.stopPropagation();
                                 setProfileOpen(prev => !prev);
@@ -120,22 +127,22 @@ const Navbar: React.FC = () => {
                             }}
                         />
                         {profileOpen && (
-                            <div className="absolute right-0 mt-2 w-44 bg-stone-100 shadow-lg rounded-xl py-2 text-sm border border-white/40 z-50">
-                                <div
-                                    onClick={() => handleNavigate("/settings")}
-                                    className="cursor-pointer w-full px-4 py-2 hover:bg-white/40"
-                                >
-                                    Settings
-                                </div>
+                            <div className="absolute right-0 mt-2 w-44 bg-white shadow-lg rounded-xl py-2 text-sm border border-gray-200 z-50">
                                 <div
                                     onClick={() => handleNavigate("/profile")}
-                                    className="cursor-pointer w-full px-4 py-2 hover:bg-white/40"
+                                    className="cursor-pointer w-full px-4 py-2 hover:bg-gray-100"
                                 >
                                     Profile
                                 </div>
                                 <div
+                                    onClick={() => handleNavigate("/settings")}
+                                    className="cursor-pointer w-full px-4 py-2 hover:bg-gray-100"
+                                >
+                                    Settings
+                                </div>
+                                <div
                                     onClick={() => handleNavigate("/logout")}
-                                    className="cursor-pointer w-full px-4 py-2 hover:bg-white/40"
+                                    className="cursor-pointer w-full px-4 py-2 hover:bg-gray-100"
                                 >
                                     Logout
                                 </div>
@@ -145,11 +152,11 @@ const Navbar: React.FC = () => {
                 </div>
             </nav>
 
-            {/* Mobile Hamburger (separate square below logo) */}
+            {/* Mobile Hamburger below header */}
             <div className="md:hidden flex justify-start px-6 mt-2">
                 <button
                     onClick={() => setOpenMenu(prev => !prev)}
-                    className="w-12 h-12 flex items-center justify-center bg-stone-200 rounded-lg shadow text-3xl"
+                    className="w-12 h-12 flex items-center justify-center bg-gray-200 rounded-lg shadow text-3xl"
                 >
                     ☰
                 </button>
@@ -174,13 +181,12 @@ const Navbar: React.FC = () => {
                     <h2 className="text-lg font-semibold">Menu</h2>
                     <button onClick={() => setOpenMenu(false)} className="text-2xl">×</button>
                 </div>
-
                 <div className="p-4 space-y-3">
                     {menuItems.map(({ label, path }) => (
                         <div
                             key={label}
                             onClick={() => handleNavigate(path)}
-                            className="cursor-pointer w-full text-left px-3 py-2 rounded hover:bg-stone-100"
+                            className="cursor-pointer w-full text-left px-3 py-2 rounded hover:bg-gray-100"
                         >
                             {label}
                         </div>
@@ -191,4 +197,4 @@ const Navbar: React.FC = () => {
     );
 };
 
-export default Navbar;
+export default AdminNavbar;

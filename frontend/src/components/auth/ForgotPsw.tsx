@@ -1,6 +1,6 @@
 // components/ForgotPassword.tsx
 import React, {useEffect, useState} from 'react';
-import { useAuth } from '../../hooks/useAuth';
+import { useAuth } from '../residents/hooks/useAuth';
 import { Mail, ArrowBigLeft } from "lucide-react";
 import logo from "../../assets/logo.png";
 

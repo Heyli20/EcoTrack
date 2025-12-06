@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import Navbar from "../../nav/Navbar";
-import Footer from "../../footer/Footer.tsx";
+import Navbar from "./residents/nav/Navbar.tsx";
+import Footer from "./residents/footer/Footer.tsx";
 import { User, Lock, Shield, LogOut, Moon, Sun } from "lucide-react";
 
 const SettingsPage: React.FC = () => {
@@ -14,6 +14,7 @@ const SettingsPage: React.FC = () => {
     return (
         <div className={darkMode ? "bg-gray-900 text-white min-h-screen" : "bg-gray-50 min-h-screen"}>
             <Navbar />
+            {/*if admin => <adminNav>*/}
 
             <main className="flex-grow">
                 <div className="p-6 mx-auto space-y-6 w-full max-w-[1400px]">
